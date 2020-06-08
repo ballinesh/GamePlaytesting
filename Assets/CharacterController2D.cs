@@ -78,8 +78,9 @@ public class CharacterController2D : MonoBehaviour
 		Collider2D[] frontColliders = Physics2D.OverlapCircleAll(m_WallDetection.position, k_ForwardRadius, m_WhatIsGround);
 		for(int i = 0; i < frontColliders.Length; i++)
 		{
-			if(frontColliders[i].gameObject != gameObject)
+			if(frontColliders[i].gameObject != gameObject && frontColliders[i].gameObject.name != "GameBoundary")
 			{
+				Debug.Log(frontColliders[i].gameObject.name);
 				Debug.Log(m_touchingWall);
 				m_touchingWall = true;
 				//TouchingWall.invoke

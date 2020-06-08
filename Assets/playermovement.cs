@@ -13,8 +13,11 @@ public class playermovement : MonoBehaviour
     bool dive = false;
     public Animator animator;
     
+    public PhysicsMaterial2D slideMaterial;
+    public PhysicsMaterial2D standingMaterial;
     private CircleCollider2D playerPhysics;
     private Rigidbody2D playerPhysics2;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,6 +39,7 @@ public class playermovement : MonoBehaviour
         //We need this second jump flag as there is a problem with the controller thinking the player landed right after jumping
         if(jumpFlag)
         {
+            
             animator.SetBool("jumping",true);
             jumpFlag = false; 
         }
@@ -62,7 +66,8 @@ public class playermovement : MonoBehaviour
         {
             Debug.Log("Diving");
             animator.SetBool("crouching",true);
-            playerPhysics.sharedMaterial.friction = 0.1f;
+            playerPhysics.sharedMaterial = slideMaterial;
+            playerPhysics2.sharedMaterial = slideMaterial;
             
             dive = true;
             
@@ -72,14 +77,18 @@ public class playermovement : MonoBehaviour
         {
             Debug.Log("Not Diving");
             animator.SetBool("crouching",false);
-            playerPhysics.sharedMaterial.friction = 0.4f;
+
+            playerPhysics.sharedMaterial = standingMaterial;
+            playerPhysics2.sharedMaterial = standingMaterial;
+            
         }
         if(Input.GetButtonDown("TestDive"))
         {
+            
+            //This does not work, friction does not change :(
             Debug.Log("Diving");
             animator.SetBool("crouching",true);
-            playerPhysics.sharedMaterial.friction = 0.0f;
-            playerPhysics2.sharedMaterial.friction = 0.0f;
+    
             
             dive = true;
             
